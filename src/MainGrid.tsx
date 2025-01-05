@@ -142,7 +142,7 @@ export function MainGrid() {
   const playCard = () => {
     modals.openContextModal({
       modal: 'playCardModal',
-      title: 'OUTER TITLE',
+      title: 'Play a card',
       innerProps: {
         credit: credit,
         steel: steel,

@@ -43,21 +43,20 @@ export const PlayCardModal = ({ context, id: modalId, innerProps }: ContextModal
     closeModal();
   }
   return (
-    <Flex direction="column" gap="md">
+    <Flex direction="column" gap="md" align="center">
       <Title>Enter card cost</Title>
       <Text size="xl">Entered Value: {enteredValue !== null ? enteredValue : 0}</Text>
-      <Grid gutter="xs">
+      <Grid gutter="10px" w="260px">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
           <Grid.Col key={num} span={4}>
-            <Button fullWidth h={"100px"} size="xl" onClick={() => handleNumberClick(num)}>{num}</Button>
+            <Button h="80px" w="80px" size="xl" onClick={() => handleNumberClick(num)}>{num}</Button>
           </Grid.Col>
         ))}
-        <Grid.Col span={4}></Grid.Col>
         <Grid.Col span={4}>
-          <Button fullWidth h={"100px"} size="xl" onClick={() => handleNumberClick(0)}>0</Button>
+          <Button h="80px" w="80px" size="xl" onClick={() => handleNumberClick(0)}>0</Button>
         </Grid.Col>
-        <Grid.Col span={4}>
-          <Button fullWidth h={"100px"} size="xl" onClick={handleClear}>CLEAR</Button>
+        <Grid.Col span={8}>
+          <Button h="80px" w="170px" size="xl" onClick={handleClear}>CLEAR</Button>
         </Grid.Col>
       </Grid>
       <Flex justify="space-between" w="100%" align="center">
@@ -95,7 +94,7 @@ export const PlayCardModal = ({ context, id: modalId, innerProps }: ContextModal
         <Text c="red">Warning: You are overpaying!</Text>
       }
 
-      <Flex justify="space-between">
+      <Flex justify="space-between" w="100%">
         <Button size="lg" onClick={closeModal}>Cancel</Button>
         <Button size="lg" disabled={calculateFinalCreditCost() > innerProps.credit} onClick={() => confirmPlayCard()}>
           {calculateFinalCreditCost() > innerProps.credit ? "Not enough credits!" : "Play Card"}
