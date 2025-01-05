@@ -9,6 +9,7 @@ interface TopControlBarProps{
   greeneryFunction: () => void;
   raiseTemperatureFunction: () => void;
   playCardFunction: () => void;
+  buyCardsFunction: () => void;
 }
 
 export function TopControlBar(props: TopControlBarProps) {
@@ -18,7 +19,7 @@ export function TopControlBar(props: TopControlBarProps) {
   return (
     <Flex p={10} w="100%" justify="space-between" align="center">
       <Grid w="100%">
-        <Grid.Col span={4}>
+        <Grid.Col span={2.5}>
           <Flex align="center" w="450px" justify="space-between">
             <Image w={100} h={100} src={props.imageUrl}/>
             <Text size="60px">{props.value}</Text>
@@ -30,7 +31,7 @@ export function TopControlBar(props: TopControlBarProps) {
             </Button>
           </Flex>
         </Grid.Col>
-        <Grid.Col span={4}>
+        <Grid.Col span={7}>
           <Flex align="center" h="100%" justify="center" gap={10}>
             <Button size="lg" onClick={() => props.playCardFunction()}>
               Play Card
@@ -41,10 +42,13 @@ export function TopControlBar(props: TopControlBarProps) {
             <Button size="lg" onClick={() => props.raiseTemperatureFunction()}>
               Raise Temperature
             </Button>
+            <Button size="lg" onClick={() => props.buyCardsFunction()}>
+              Buy Card(s)
+            </Button>
           </Flex>
 
         </Grid.Col>
-        <Grid.Col span={4}>
+        <Grid.Col span={2.5}>
           <Flex align="center" h="100%" justify="center" gap={10}>
             <Button size="lg" onClick={() => props.claimProductionFunction()}>
               Claim Production

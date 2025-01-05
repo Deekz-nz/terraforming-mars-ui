@@ -5,12 +5,17 @@ import { MainGrid } from "./MainGrid";
 import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
 import { PlayCardModal } from "./PlayCardModal";
+import { BuyCardsModal } from "./BuyCardsModal";
 
 export default function App() {
   return (
     <MantineProvider theme={theme}>
       <ModalsProvider
-         modals={{ playCardModal: PlayCardModal /* ...other modals */ }}
+         modals={{ 
+          playCardModal: PlayCardModal,
+          buyCardModal: BuyCardsModal,
+
+          }}
       >
         <Notifications />
         <MainGrid/>

@@ -175,7 +175,18 @@ export function MainGrid() {
         position: "bottom-right",
         autoClose: 3000,
     });
-}
+  }
+
+  const buyCards = () => {
+    modals.openContextModal({
+      modal: 'buyCardModal',
+      title: 'Buy cards',
+      innerProps: {
+        credit: credit,
+        setCredit: setCredit,
+      },
+    })
+  }
 
   return (
     <Flex direction="column" style={{ width: "100%", height: "100%" }}>
@@ -188,6 +199,7 @@ export function MainGrid() {
         greeneryFunction={placeGreenery}
         raiseTemperatureFunction={raiseTemperature}
         playCardFunction={playCard}
+        buyCardsFunction={buyCards}
       />
       <Grid style={{ width: "100%", height: "100%" }}>
         <Grid.Col span={4}>
