@@ -1,4 +1,5 @@
 import { Button, Flex, Grid, Image, Text } from "@mantine/core";
+import { IconSettings } from "@tabler/icons-react";
 
 interface TopControlBarProps{
   imageUrl: string;
@@ -10,12 +11,14 @@ interface TopControlBarProps{
   raiseTemperatureFunction: () => void;
   playCardFunction: () => void;
   buyCardsFunction: () => void;
+  openSettings: () => void;
 }
 
 export function TopControlBar(props: TopControlBarProps) {
   const modifyTerraformRating = (delta: number) => {
     props.setValue(props.value + delta);
   }
+  
   return (
     <Flex p={10} w="100%" justify="space-between" align="center">
       <Grid w="100%">
@@ -55,6 +58,9 @@ export function TopControlBar(props: TopControlBarProps) {
             </Button>
             <Button size="lg" onClick={() => props.resetFunction()}>
               RESET
+            </Button>
+            <Button size="lg" onClick={() => props.openSettings()}>
+              <IconSettings/>
             </Button>
           </Flex>
         </Grid.Col>

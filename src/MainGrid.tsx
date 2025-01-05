@@ -5,6 +5,8 @@ import { notifications } from "@mantine/notifications";
 import { IconX, IconCheck } from '@tabler/icons-react';
 import { modals } from "@mantine/modals";
 import { useResourceStore } from "./useResourceStore";
+import { useDisclosure } from "@mantine/hooks";
+import { SettingsDrawer } from "./SettingsDrawer";
 
 export function MainGrid() {
   const {
@@ -21,8 +23,12 @@ export function MainGrid() {
     powerProduction,
     heat,
     heatProduction,
+    plantPerGreenery,
+    heatPerTemperature,
     setResource,
 } = useResourceStore();
+const [settingsOpened, { open: openSettings, close: closeSettings }] = useDisclosure(false);
+
   const confirmResetModal = () => modals.openConfirmModal({
     title: 'Are you sure you want to reset the board?',
     children: (
@@ -88,8 +94,8 @@ export function MainGrid() {
   const checkIcon = <IconCheck style={{ width: rem(20), height: rem(20) }} />;
 
   const placeGreenery = () => {
-    if (plants > 7) {
-      setResource('plants', plants - 8);
+    if (plants > plantPerGreenery) {
+      setResource('plants', plants - plantPerGreenery);
       notifications.show({
         title: 'Success!',
         message: 'You can now place a greenery tile.',
@@ -101,7 +107,7 @@ export function MainGrid() {
     } else {
       notifications.show({
         title: 'Not enough plants!',
-        message: 'You need at least 8 plants to place a greenery tile.',
+        message: `You need at least ${plantPerGreenery} plants to place a greenery tile.`,
         icon: xIcon,
         color: "red"
       })
@@ -109,8 +115,8 @@ export function MainGrid() {
   }
 
   const raiseTemperature = () => {
-    if (heat > 7) {
-      setResource('heat', heat - 8);
+    if (heat > heatPerTemperature) {
+      setResource('heat', heat - heatPerTemperature);
       notifications.show({
         title: 'Success!',
         message: 'You can now raise the temperature.',
@@ -122,7 +128,7 @@ export function MainGrid() {
     } else {
       notifications.show({
         title: 'Not enough heat!',
-        message: 'You need at least 8 heat to raise the temperature',
+        message: `You need at least ${heatPerTemperature} heat to raise the temperature`,
         icon: xIcon,
         color: "red"
       })
@@ -134,9 +140,6 @@ export function MainGrid() {
       modal: 'playCardModal',
       title: 'Play a card',
       innerProps: {
-        credit: credit,
-        steel: steel,
-        titanium: titanium,
         payForCard: payForCard
       },
     })
@@ -180,6 +183,7 @@ export function MainGrid() {
 
   return (
     <Flex direction="column" style={{ width: "100%", height: "100%" }}>
+      <SettingsDrawer settingsOpened={settingsOpened} closeSettings={closeSettings} />
       <TopControlBar 
         imageUrl="images/TR.png" 
         value={terraformRating}
@@ -190,6 +194,7 @@ export function MainGrid() {
         raiseTemperatureFunction={raiseTemperature}
         playCardFunction={playCard}
         buyCardsFunction={buyCards}
+        openSettings={openSettings}
       />
       <Grid style={{ width: "100%", height: "100%" }}>
         <Grid.Col span={4}>

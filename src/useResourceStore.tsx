@@ -15,6 +15,10 @@ type ResourceState = {
     powerProduction: number;
     heat: number;
     heatProduction: number;
+    creditPerSteel: number;
+    creditPerTitanium: number;
+    plantPerGreenery: number;
+    heatPerTemperature: number;
     setResource: (key: keyof ResourceState, value: number) => void;
 };
 
@@ -34,6 +38,10 @@ export const useResourceStore = create<ResourceState>()(
             powerProduction: 0,
             heat: 0,
             heatProduction: 0,
+            creditPerSteel: 2,
+            creditPerTitanium: 3,
+            plantPerGreenery: 8,
+            heatPerTemperature: 8,
             setResource: (key, value) => set((state) => ({ ...state, [key]: value })),
         }),
         {
