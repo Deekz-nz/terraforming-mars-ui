@@ -13,6 +13,7 @@ interface GridTileProps {
 }
 export function GridTile(props: GridTileProps) {
 
+  // default value
   const { negativeProdAllowed = false } = props;
 
   const modifyValue = (delta: number) => {
@@ -23,9 +24,12 @@ export function GridTile(props: GridTileProps) {
     props.setProductionValue(props.productionValue + delta);
   }
   return (
-    <Flex direction="column" align="center" style={{width: props.width}} gap={10}>
-      <Image w={100} h={100} src={props.imageUrl} />
-      <Text size="60px">{props.value}</Text>
+    <Flex direction="column" align="center" gap={10} style={{width: props.width}}>
+      <Flex align="center" gap={10} w={150} justify="space-between">
+        <Image w={100} h={100} src={props.imageUrl} />
+        <Text size="60px">{props.value}</Text>
+      </Flex>
+
       <Flex gap={10}>
         <Button size="lg" w="100px" onClick={() => modifyValue(1)}>
           +1
@@ -57,12 +61,15 @@ export function GridTile(props: GridTileProps) {
         >
           <Flex direction="column" gap={10} align="center" w="100%" p={5}>
             <Text size="40px">{props.productionValue}</Text>
-            <Button size="lg" w="200px" onClick={() => modifyProductionValue(1)}>
-              +1 Prod
-            </Button>
-            <Button size="lg" w="200px" onClick={() => modifyProductionValue(-1)} disabled={negativeProdAllowed ? false : props.productionValue < 1}>
-              -1 Prod
-            </Button>
+            <Flex gap={10}>
+              <Button size="lg" w="100px" onClick={() => modifyProductionValue(-1)} disabled={negativeProdAllowed ? false : props.productionValue < 1}>
+                -1
+              </Button>
+              <Button size="lg" w="100px" onClick={() => modifyProductionValue(1)}>
+                +1
+              </Button>
+            </Flex>
+
           </Flex>
         </BackgroundImage>
       </Flex>
