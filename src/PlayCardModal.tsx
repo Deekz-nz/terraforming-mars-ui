@@ -1,7 +1,5 @@
-import { Button, Flex, Grid, rem, Text, Title } from "@mantine/core";
+import { Button, Flex, Grid, Text, Title } from "@mantine/core";
 import { ContextModalProps } from "@mantine/modals";
-import { notifications } from "@mantine/notifications";
-import { IconX } from "@tabler/icons-react";
 import { useState } from "react";
 
 export const PlayCardModal = ({ context, id: modalId, innerProps }: ContextModalProps<{ 
@@ -24,7 +22,6 @@ export const PlayCardModal = ({ context, id: modalId, innerProps }: ContextModal
     setEnteredValue(0);
   };
 
-  const xIcon = <IconX style={{ width: rem(20), height: rem(20) }} />;
   const [selectedSteel, setSelectedSteel] = useState<number>(0);
 
   const modifySelectedSteel = (delta: number) => {
