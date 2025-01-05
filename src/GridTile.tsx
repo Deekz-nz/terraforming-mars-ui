@@ -9,11 +9,18 @@ interface GridTileProps {
   productionValue: number;
   setProductionValue: (val: number) => void;
   imageUrl: string;
+  negativeProdAllowed?: boolean;
 }
 export function GridTile(props: GridTileProps) {
 
+  const { negativeProdAllowed = false } = props;
+
   const modifyValue = (delta: number) => {
     props.setValue(props.value + delta)
+  }
+
+  const modifyProductionValue = (delta: number) => {
+    props.setProductionValue(props.productionValue + delta);
   }
   return (
     <Flex direction="column" align="center" style={{width: props.width}} gap={10}>
@@ -50,10 +57,10 @@ export function GridTile(props: GridTileProps) {
         >
           <Flex direction="column" gap={10} align="center" w="100%" p={5}>
             <Text size="40px">{props.productionValue}</Text>
-            <Button size="lg" w="200px">
+            <Button size="lg" w="200px" onClick={() => modifyProductionValue(1)}>
               +1 Prod
             </Button>
-            <Button size="lg" w="200px">
+            <Button size="lg" w="200px" onClick={() => modifyProductionValue(-1)} disabled={negativeProdAllowed ? false : props.productionValue < 1}>
               -1 Prod
             </Button>
           </Flex>

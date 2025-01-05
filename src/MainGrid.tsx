@@ -20,6 +20,7 @@ export function MainGrid() {
             productionValue={creditProduction}
             setProductionValue={setCreditProduction}
             imageUrl={"images/megacredit.png"}
+            negativeProdAllowed={true}
           />
         </Grid.Col>
         <Grid.Col span={4}>
