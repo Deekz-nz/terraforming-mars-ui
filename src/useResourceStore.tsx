@@ -19,6 +19,7 @@ type ResourceState = {
     creditPerTitanium: number;
     plantPerGreenery: number;
     heatPerTemperature: number;
+    creditPerCard: number;
     setResource: (key: keyof ResourceState, value: number) => void;
 };
 
@@ -42,6 +43,7 @@ export const useResourceStore = create<ResourceState>()(
             creditPerTitanium: 3,
             plantPerGreenery: 8,
             heatPerTemperature: 8,
+            creditPerCard: 3,
             setResource: (key, value) => set((state) => ({ ...state, [key]: value })),
         }),
         {

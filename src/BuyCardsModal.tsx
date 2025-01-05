@@ -3,12 +3,15 @@ import { ContextModalProps } from "@mantine/modals"
 import { notifications } from "@mantine/notifications";
 import { IconCheck } from "@tabler/icons-react";
 import { useState } from "react";
+import { useResourceStore } from "./useResourceStore";
 
-export const BuyCardsModal = ({ context, id: modalId, innerProps }: ContextModalProps<{ 
-  credit: number,
-  setCredit: (val: number) => void;
-}>) => {
+export const BuyCardsModal = ({ context, id: modalId }: ContextModalProps<{}>) => {
 
+  const {
+    creditPerCard,
+    credit,
+    setResource,
+  } = useResourceStore();
   const closeModal = () => {
     context.closeModal(modalId);
   };
@@ -16,7 +19,7 @@ export const BuyCardsModal = ({ context, id: modalId, innerProps }: ContextModal
   const checkIcon = <IconCheck style={{ width: rem(20), height: rem(20) }} />;
   
   const buyCards = () => {
-    innerProps.setCredit(innerProps.credit - cardNumber * 3);
+    setResource("credit", credit - cardNumber * creditPerCard);
     notifications.show({
         title: 'Success!',
         message: `You bought ${cardNumber} card(s).`,
@@ -39,8 +42,8 @@ export const BuyCardsModal = ({ context, id: modalId, innerProps }: ContextModal
       </Flex>
       <Flex w="100%" justify="space-between">
         <Button size="lg" onClick={() => closeModal()}>Cancel</Button>
-        <Button size="lg" disabled={cardNumber*3 > innerProps.credit || cardNumber === 0} onClick={() => buyCards()}>
-          {cardNumber * 3 > innerProps.credit ? 
+        <Button size="lg" disabled={cardNumber * creditPerCard > credit || cardNumber === 0} onClick={() => buyCards()}>
+          {cardNumber * creditPerCard > credit ? 
           "Not enough credit(s)"
           :
             "Buy cards"

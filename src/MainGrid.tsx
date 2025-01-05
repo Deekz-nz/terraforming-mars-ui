@@ -54,6 +54,11 @@ const [settingsOpened, { open: openSettings, close: closeSettings }] = useDisclo
     setResource('powerProduction', 0);
     setResource('heat', 0);
     setResource('heatProduction', 0);
+    setResource('creditPerCard', 3);
+    setResource('creditPerSteel', 2);
+    setResource('creditPerTitanium', 3);
+    setResource('heatPerTemperature', 8);
+    setResource('plantPerGreenery', 8);
   }
 
   const confirmProductionModal = () => modals.openConfirmModal({
@@ -174,10 +179,7 @@ const [settingsOpened, { open: openSettings, close: closeSettings }] = useDisclo
     modals.openContextModal({
       modal: 'buyCardModal',
       title: 'Buy cards',
-      innerProps: {
-        credit: credit,
-        setCredit: (value: number) => setResource('credit', value),
-      },
+      innerProps: {},
     })
   }
 
