@@ -7,6 +7,7 @@ interface TopControlBarProps{
   resetFunction: () => void;
   claimProductionFunction: () => void;
   greeneryFunction: () => void;
+  raiseTemperatureFunction: () => void;
 }
 
 export function TopControlBar(props: TopControlBarProps) {
@@ -36,7 +37,7 @@ export function TopControlBar(props: TopControlBarProps) {
             <Button size="lg" onClick={() => props.greeneryFunction()}>
               Place Greenery
             </Button>
-            <Button size="lg">
+            <Button size="lg" onClick={() => props.raiseTemperatureFunction()}>
               Raise Temperature
             </Button>
           </Flex>

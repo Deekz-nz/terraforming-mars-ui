@@ -1,9 +1,10 @@
-import { Flex, Grid, rem } from "@mantine/core";
+import { Flex, Grid, rem, Text } from "@mantine/core";
 import { GridTile } from "./GridTile";
 import { useState } from "react";
 import { TopControlBar } from "./TopControlBar";
 import { notifications } from "@mantine/notifications";
 import { IconX, IconCheck } from '@tabler/icons-react';
+import { modals } from "@mantine/modals";
 
 export function MainGrid() {
   const [terraformRating, setTerraformRating] = useState<number>(20);
@@ -26,6 +27,16 @@ export function MainGrid() {
   const [heat, setHeat] = useState<number>(0);
   const [heatProduction, setHeatProduction] = useState<number>(0);
 
+  const confirmResetModal = () => modals.openConfirmModal({
+    title: 'Are you sure you want to reset the board?',
+    children: (
+      <Text size="sm">
+        This action is irreversible. Are you sure you want to reset everything back to the default?
+      </Text>
+    ),
+    labels: { confirm: 'Confirm', cancel: 'Cancel' },
+    onConfirm: () => resetAll(),
+  });
   const resetAll = () => {
     setCredit(0);
     setCreditProduction(0);
@@ -48,6 +59,16 @@ export function MainGrid() {
     setTerraformRating(20);
   }
 
+  const confirmProductionModal = () => modals.openConfirmModal({
+    title: 'Are you sure you want to claim your production?',
+    children: (
+      <Text size="sm">
+        This will add your production to your current values, and move your energy to your heat. Are you sure?
+      </Text>
+    ),
+    labels: { confirm: 'Confirm', cancel: 'Cancel' },
+    onConfirm: () => claimProduction(),
+  });
   const claimProduction = () => {
     // Credit production also includes current terraform rating
     setCredit(credit + creditProduction + terraformRating);
@@ -94,15 +115,37 @@ export function MainGrid() {
       })
     }
   }
+
+  const raiseTemperature = () => {
+    if (heat > 7) {
+      setHeat(heat - 8);
+      notifications.show({
+        title: 'Success!',
+        message: 'You can now raise the temperature.',
+        icon: checkIcon,
+        color: "green",
+        position: "bottom-right",
+        autoClose: 3000,
+      })
+    } else {
+      notifications.show({
+        title: 'Not enough heat!',
+        message: 'You need at least 8 heat to raise the temperature',
+        icon: xIcon,
+        color: "red"
+      })
+    }
+  }
   return (
     <Flex direction="column" style={{ width: "100%", height: "100%" }}>
       <TopControlBar 
         imageUrl="images/TR.png" 
         value={terraformRating}
         setValue={setTerraformRating}
-        resetFunction={resetAll}
-        claimProductionFunction={claimProduction}
+        resetFunction={confirmResetModal}
+        claimProductionFunction={confirmProductionModal}
         greeneryFunction={placeGreenery}
+        raiseTemperatureFunction={raiseTemperature}
       />
       <Grid style={{ width: "100%", height: "100%" }}>
         <Grid.Col span={4}>
