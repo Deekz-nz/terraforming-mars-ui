@@ -28,31 +28,13 @@ export const PlayCardModal = ({ context, id: modalId, innerProps }: ContextModal
   const [selectedSteel, setSelectedSteel] = useState<number>(0);
 
   const modifySelectedSteel = (delta: number) => {
-    if (selectedSteel + delta > innerProps.steel) {
-      notifications.show({
-        title: 'Not enough steel!',
-        message: "You don't have any more steel to use!",
-        icon: xIcon,
-        color: "red"
-      })
-    } else if (selectedSteel + delta >= 0) {
-      setSelectedSteel(selectedSteel + delta);
-    }
+    setSelectedSteel(selectedSteel + delta);
   }
 
   const [selectedTitanium, setSelectedTitanium] = useState<number>(0);
 
   const modifySelectedTitanium = (delta: number) => {
-    if (selectedTitanium + delta > innerProps.titanium) {
-      notifications.show({
-        title: 'Not enough titanium!',
-        message: "You don't have any more titanium to use!",
-        icon: xIcon,
-        color: "red"
-      })
-    } else if (selectedTitanium + delta >= 0) {
-      setSelectedTitanium(selectedTitanium + delta);
-    }
+    setSelectedTitanium(selectedTitanium + delta);
   }
 
   const calculateFinalCreditCost = () => {
@@ -84,11 +66,11 @@ export const PlayCardModal = ({ context, id: modalId, innerProps }: ContextModal
       <Flex justify="space-between" w="100%" align="center">
         <Text size="xl">Use steel?</Text>
         <Flex align="center" gap={10}>
-          <Button size="lg" onClick={() => {modifySelectedSteel(-1)}}>
+          <Button size="lg" onClick={() => {modifySelectedSteel(-1)}} disabled={selectedSteel === 0}>
             -
           </Button>
           <Text size="xl">{selectedSteel} / {innerProps.steel}</Text>
-          <Button size="lg" onClick={() => {modifySelectedSteel(1)}}>
+          <Button size="lg" onClick={() => {modifySelectedSteel(1)}} disabled={selectedSteel >= innerProps.steel}>
             +
           </Button>
         </Flex>
@@ -97,11 +79,11 @@ export const PlayCardModal = ({ context, id: modalId, innerProps }: ContextModal
       <Flex justify="space-between" w="100%" align="center">
         <Text size="xl">Use titanium?</Text>
         <Flex align="center" gap={10}>
-          <Button size="lg" onClick={() => {modifySelectedTitanium(-1)}}>
+          <Button size="lg" onClick={() => {modifySelectedTitanium(-1)}} disabled={selectedTitanium === 0}>
             -
           </Button>
           <Text size="xl">{selectedTitanium} / {innerProps.titanium}</Text>
-          <Button size="lg" onClick={() => {modifySelectedTitanium(1)}}>
+          <Button size="lg" onClick={() => {modifySelectedTitanium(1)}} disabled={selectedTitanium >= innerProps.titanium}>
             +
           </Button>
         </Flex>
@@ -111,6 +93,10 @@ export const PlayCardModal = ({ context, id: modalId, innerProps }: ContextModal
         <Text size="xl">Remainder (to be paid using credits):</Text>
         <Text size="xl">{calculateFinalCreditCost()}</Text>
       </Flex>
+
+      {calculateFinalCreditCost() < 0 &&
+        <Text c="red">Warning: You are overpaying!</Text>
+      }
 
       <Flex justify="space-between">
         <Button size="lg" onClick={closeModal}>Cancel</Button>

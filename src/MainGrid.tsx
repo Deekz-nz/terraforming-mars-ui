@@ -153,7 +153,7 @@ export function MainGrid() {
   }
 
   const payForCard = (cardCredit: number, cardSteel: number, cardTitanium: number) => {
-    setCredit(credit - cardCredit);
+    if (cardCredit > 0) setCredit(credit - cardCredit);
     setSteel(steel - cardSteel);
     setTitanium(titanium - cardTitanium);
 

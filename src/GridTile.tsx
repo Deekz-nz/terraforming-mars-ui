@@ -67,11 +67,11 @@ export function GridTile(props: GridTileProps) {
       <Divider size="md" w="100%"/>
       <Flex w="100%" p={20} pt={0} pb={0}>
         <BackgroundImage src="images/production_bg.png" radius="sm" w="100%">
-          <Flex direction="column" gap={10} align="center" w="100%" p={5}>
-            <Text size="40px">{props.productionValue}</Text>
-            <Flex gap={10}>
-              <Button size="lg" w="100px" onClick={() => modifyProductionValue(-1)} disabled={!negativeProdAllowed && props.productionValue < 1}>-1</Button>
-              <Button size="lg" w="100px" onClick={() => modifyProductionValue(1)}>+1</Button>
+          <Flex direction="column" gap={10} align="center" w="100%" p={5} pt={20} pb={20}>
+            <Flex w="40%" justify="space-between">
+              <Button size="lg" onClick={() => modifyProductionValue(-1)} disabled={!negativeProdAllowed && props.productionValue < 1}>-</Button>
+              <Text size="40px">{props.productionValue}</Text>
+              <Button size="lg" onClick={() => modifyProductionValue(1)}>+</Button>
             </Flex>
           </Flex>
         </BackgroundImage>
