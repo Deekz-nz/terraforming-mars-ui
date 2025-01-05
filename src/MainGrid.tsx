@@ -70,6 +70,7 @@ export function MainGrid() {
     labels: { confirm: 'Claim Production', cancel: 'Cancel' },
     onConfirm: () => claimProduction(),
   });
+
   const claimProduction = () => {
     // Credit production also includes current terraform rating
     setCredit(credit + creditProduction + terraformRating);
@@ -137,6 +138,45 @@ export function MainGrid() {
       })
     }
   }
+
+  const playCard = () => {
+    modals.openContextModal({
+      modal: 'playCardModal',
+      title: 'OUTER TITLE',
+      innerProps: {
+        credit: credit,
+        steel: steel,
+        titanium: titanium,
+        payForCard: payForCard
+      },
+    })
+  }
+
+  const payForCard = (cardCredit: number, cardSteel: number, cardTitanium: number) => {
+    setCredit(credit - cardCredit);
+    setSteel(steel - cardSteel);
+    setTitanium(titanium - cardTitanium);
+
+    const resourcesUsed = [
+        cardCredit > 0 ? `${cardCredit} credits` : null,
+        cardSteel > 0 ? `${cardSteel} steel` : null,
+        cardTitanium > 0 ? `${cardTitanium} titanium` : null
+    ].filter(Boolean);
+
+    const formattedResources = resourcesUsed.length > 1
+        ? resourcesUsed.slice(0, -1).join(", ") + " and " + resourcesUsed.slice(-1)
+        : resourcesUsed[0] || "";
+
+    notifications.show({
+        title: 'Success!',
+        message: `You paid for a card using ${formattedResources}.`,
+        icon: checkIcon,
+        color: "green",
+        position: "bottom-right",
+        autoClose: 3000,
+    });
+}
+
   return (
     <Flex direction="column" style={{ width: "100%", height: "100%" }}>
       <TopControlBar 
@@ -147,6 +187,7 @@ export function MainGrid() {
         claimProductionFunction={confirmProductionModal}
         greeneryFunction={placeGreenery}
         raiseTemperatureFunction={raiseTemperature}
+        playCardFunction={playCard}
       />
       <Grid style={{ width: "100%", height: "100%" }}>
         <Grid.Col span={4}>

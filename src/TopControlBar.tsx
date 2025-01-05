@@ -8,6 +8,7 @@ interface TopControlBarProps{
   claimProductionFunction: () => void;
   greeneryFunction: () => void;
   raiseTemperatureFunction: () => void;
+  playCardFunction: () => void;
 }
 
 export function TopControlBar(props: TopControlBarProps) {
@@ -31,7 +32,7 @@ export function TopControlBar(props: TopControlBarProps) {
         </Grid.Col>
         <Grid.Col span={4}>
           <Flex align="center" h="100%" justify="center" gap={10}>
-            <Button size="lg">
+            <Button size="lg" onClick={() => props.playCardFunction()}>
               Play Card
             </Button>
             <Button size="lg" onClick={() => props.greeneryFunction()}>
