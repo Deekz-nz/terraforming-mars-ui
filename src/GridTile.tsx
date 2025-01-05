@@ -1,4 +1,4 @@
-import { Button, Divider, Flex, Text, Title } from "@mantine/core";
+import { Button, Divider, Flex, Text, Title, Image, BackgroundImage } from "@mantine/core";
 
 interface GridTileProps { 
   title: string;
@@ -8,6 +8,7 @@ interface GridTileProps {
   setValue: (val: number) => void;
   productionValue: number;
   setProductionValue: (val: number) => void;
+  imageUrl: string;
 }
 export function GridTile(props: GridTileProps) {
 
@@ -16,7 +17,7 @@ export function GridTile(props: GridTileProps) {
   }
   return (
     <Flex direction="column" align="center" style={{width: props.width}} gap={10}>
-      <Title>{props.title}</Title>
+      <Image w={100} h={100} src={props.imageUrl} />
       <Text size="60px">{props.value}</Text>
       <Flex gap={10}>
         <Button size="lg" w="100px" onClick={() => modifyValue(1)}>
@@ -40,14 +41,24 @@ export function GridTile(props: GridTileProps) {
           -10
         </Button>
       </Flex>
-      <Divider my="md" size="md" w="100%"/>
-      <Text size="40px">{props.productionValue}</Text>
-      <Button size="lg" w="200px">
-        +1 Prod
-      </Button>
-      <Button size="lg" w="200px">
-        -1 Prod
-      </Button>
+      <Divider size="md" w="100%"/>
+      <Flex w="100%" p={20} pt={0} pb={0}>
+        <BackgroundImage
+          src="images/production_bg.png"
+          radius="sm"
+          w="100%"
+        >
+          <Flex direction="column" gap={10} align="center" w="100%" p={5}>
+            <Text size="40px">{props.productionValue}</Text>
+            <Button size="lg" w="200px">
+              +1 Prod
+            </Button>
+            <Button size="lg" w="200px">
+              -1 Prod
+            </Button>
+          </Flex>
+        </BackgroundImage>
+      </Flex>
     </Flex>
   )
 }

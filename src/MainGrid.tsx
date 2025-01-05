@@ -19,22 +19,68 @@ export function MainGrid() {
             setValue={setCredit}
             productionValue={creditProduction}
             setProductionValue={setCreditProduction}
+            imageUrl={"images/megacredit.png"}
           />
         </Grid.Col>
         <Grid.Col span={4}>
-          Steel
+          <GridTile
+              title="Steel"
+              height="50%"
+              width="100%"
+              value={credit}
+              setValue={setCredit}
+              productionValue={creditProduction}
+              setProductionValue={setCreditProduction}
+              imageUrl={"images/steel.png"}
+            />
         </Grid.Col>
         <Grid.Col span={4}>
-          Titanium
+          <GridTile
+              title="Titanium"
+              height="50%"
+              width="100%"
+              value={credit}
+              setValue={setCredit}
+              productionValue={creditProduction}
+              setProductionValue={setCreditProduction}
+              imageUrl={"images/titanium.png"}
+            />
         </Grid.Col>
         <Grid.Col span={4}>
-          Plants
+          <GridTile
+              title="Plants"
+              height="50%"
+              width="100%"
+              value={credit}
+              setValue={setCredit}
+              productionValue={creditProduction}
+              setProductionValue={setCreditProduction}
+              imageUrl={"images/plant.png"}
+            />
         </Grid.Col>
         <Grid.Col span={4}>
-          Electicity
+          <GridTile
+              title="Power"
+              height="50%"
+              width="100%"
+              value={credit}
+              setValue={setCredit}
+              productionValue={creditProduction}
+              setProductionValue={setCreditProduction}
+              imageUrl={"images/power.png"}
+            />
         </Grid.Col>
         <Grid.Col span={4}>
-          Heat
+          <GridTile
+              title="Heat"
+              height="50%"
+              width="100%"
+              value={credit}
+              setValue={setCredit}
+              productionValue={creditProduction}
+              setProductionValue={setCreditProduction}
+              imageUrl={"images/heat.png"}
+            />
         </Grid.Col>
       </Grid>
     </Flex>
