@@ -7,6 +7,7 @@ import { IconX, IconCheck } from '@tabler/icons-react';
 import { modals } from "@mantine/modals";
 
 export function MainGrid() {
+  
   const [terraformRating, setTerraformRating] = useState<number>(20);
 
   const [credit, setCredit] = useState<number>(0);
