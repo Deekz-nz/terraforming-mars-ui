@@ -1,33 +1,28 @@
 import { Flex, Grid, rem, Text } from "@mantine/core";
 import { GridTile } from "./GridTile";
-import { useState } from "react";
 import { TopControlBar } from "./TopControlBar";
 import { notifications } from "@mantine/notifications";
 import { IconX, IconCheck } from '@tabler/icons-react';
 import { modals } from "@mantine/modals";
+import { useResourceStore } from "./useResourceStore";
 
 export function MainGrid() {
-  
-  const [terraformRating, setTerraformRating] = useState<number>(20);
-
-  const [credit, setCredit] = useState<number>(0);
-  const [creditProduction, setCreditProduction] = useState<number>(0);
-
-  const [steel, setSteel] = useState<number>(0);
-  const [steelProduction, setSteelProduction] = useState<number>(0);
-
-  const [titanium, setTitanium] = useState<number>(0);
-  const [titaniumProduction, setTitaniumProduction] = useState<number>(0);
-
-  const [plants, setPlants] = useState<number>(0);
-  const [plantsProduction, setPlantsProduction] = useState<number>(0);
-
-  const [power, setPower] = useState<number>(0);
-  const [powerProduction, setPowerProduction] = useState<number>(0);
-
-  const [heat, setHeat] = useState<number>(0);
-  const [heatProduction, setHeatProduction] = useState<number>(0);
-
+  const {
+    terraformRating,
+    credit,
+    creditProduction,
+    steel,
+    steelProduction,
+    titanium,
+    titaniumProduction,
+    plants,
+    plantsProduction,
+    power,
+    powerProduction,
+    heat,
+    heatProduction,
+    setResource,
+} = useResourceStore();
   const confirmResetModal = () => modals.openConfirmModal({
     title: 'Are you sure you want to reset the board?',
     children: (
@@ -40,25 +35,19 @@ export function MainGrid() {
     onConfirm: () => resetAll(),
   });
   const resetAll = () => {
-    setCredit(0);
-    setCreditProduction(0);
-
-    setSteel(0);
-    setSteelProduction(0);
-
-    setTitanium(0);
-    setTitaniumProduction(0);
-
-    setPlants(0);
-    setPlantsProduction(0);
-
-    setPower(0);
-    setPowerProduction(0);
-
-    setHeat(0);
-    setHeatProduction(0);
-
-    setTerraformRating(20);
+    setResource('terraformRating', 20);
+    setResource('credit', 0);
+    setResource('creditProduction', 0);
+    setResource('steel', 0);
+    setResource('steelProduction', 0);
+    setResource('titanium', 0);
+    setResource('titaniumProduction', 0);
+    setResource('plants', 0);
+    setResource('plantsProduction', 0);
+    setResource('power', 0);
+    setResource('powerProduction', 0);
+    setResource('heat', 0);
+    setResource('heatProduction', 0);
   }
 
   const confirmProductionModal = () => modals.openConfirmModal({
@@ -74,16 +63,16 @@ export function MainGrid() {
 
   const claimProduction = () => {
     // Credit production also includes current terraform rating
-    setCredit(credit + creditProduction + terraformRating);
-    setSteel(steel + steelProduction);
-    setTitanium(titanium + titaniumProduction);
-    setPlants(plants + plantsProduction);
+    setResource('credit', credit + creditProduction + terraformRating);
+    setResource('steel', steel + steelProduction);
+    setResource('titanium', titanium + titaniumProduction);
+    setResource('plants', plants + plantsProduction);
     
     // Heat production is current heat + current power + heat production
     // Power is set to the level of production
 
-    setHeat(heat + power + heatProduction);
-    setPower(powerProduction);
+    setResource('heat', heat + power + heatProduction);
+    setResource('power', powerProduction);
 
     notifications.show({
       title: 'Success!',
@@ -100,7 +89,7 @@ export function MainGrid() {
 
   const placeGreenery = () => {
     if (plants > 7) {
-      setPlants(plants - 8);
+      setResource('plants', plants - 8);
       notifications.show({
         title: 'Success!',
         message: 'You can now place a greenery tile.',
@@ -121,7 +110,7 @@ export function MainGrid() {
 
   const raiseTemperature = () => {
     if (heat > 7) {
-      setHeat(heat - 8);
+      setResource('heat', heat - 8);
       notifications.show({
         title: 'Success!',
         message: 'You can now raise the temperature.',
@@ -154,9 +143,9 @@ export function MainGrid() {
   }
 
   const payForCard = (cardCredit: number, cardSteel: number, cardTitanium: number) => {
-    if (cardCredit > 0) setCredit(credit - cardCredit);
-    setSteel(steel - cardSteel);
-    setTitanium(titanium - cardTitanium);
+    if (cardCredit > 0) setResource('credit', credit - cardCredit);
+    setResource('steel', steel - cardSteel);
+    setResource('titanium', titanium - cardTitanium);
 
     const resourcesUsed = [
         cardCredit > 0 ? `${cardCredit} credits` : null,
@@ -184,7 +173,7 @@ export function MainGrid() {
       title: 'Buy cards',
       innerProps: {
         credit: credit,
-        setCredit: setCredit,
+        setCredit: (value: number) => setResource('credit', value),
       },
     })
   }
@@ -194,7 +183,7 @@ export function MainGrid() {
       <TopControlBar 
         imageUrl="images/TR.png" 
         value={terraformRating}
-        setValue={setTerraformRating}
+        setValue={(value: number) => setResource('terraformRating', value)}
         resetFunction={confirmResetModal}
         claimProductionFunction={confirmProductionModal}
         greeneryFunction={placeGreenery}
@@ -209,9 +198,9 @@ export function MainGrid() {
             height="50%"
             width="100%"
             value={credit}
-            setValue={setCredit}
+            setValue={(value: number) => setResource('credit', value)}
             productionValue={creditProduction}
-            setProductionValue={setCreditProduction}
+            setProductionValue={(value: number) => setResource('creditProduction', value)}
             imageUrl={"images/megacredit.png"}
             negativeProdAllowed={true}
           />
@@ -222,9 +211,9 @@ export function MainGrid() {
             height="50%"
             width="100%"
             value={steel}
-            setValue={setSteel}
+            setValue={(value: number) => setResource('steel', value)}
             productionValue={steelProduction}
-            setProductionValue={setSteelProduction}
+            setProductionValue={(value: number) => setResource('steelProduction', value)}
             imageUrl={"images/steel.png"}
           />
         </Grid.Col>
@@ -234,9 +223,9 @@ export function MainGrid() {
             height="50%"
             width="100%"
             value={titanium}
-            setValue={setTitanium}
+            setValue={(value: number) => setResource('titanium', value)}
             productionValue={titaniumProduction}
-            setProductionValue={setTitaniumProduction}
+            setProductionValue={(value: number) => setResource('titaniumProduction', value)}
             imageUrl={"images/titanium.png"}
           />
         </Grid.Col>
@@ -246,9 +235,9 @@ export function MainGrid() {
             height="50%"
             width="100%"
             value={plants}
-            setValue={setPlants}
+            setValue={(value: number) => setResource('plants', value)}
             productionValue={plantsProduction}
-            setProductionValue={setPlantsProduction}
+            setProductionValue={(value: number) => setResource('plantsProduction', value)}
             imageUrl={"images/plant.png"}
           />
         </Grid.Col>
@@ -258,9 +247,9 @@ export function MainGrid() {
             height="50%"
             width="100%"
             value={power}
-            setValue={setPower}
+            setValue={(value: number) => setResource('power', value)}
             productionValue={powerProduction}
-            setProductionValue={setPowerProduction}
+            setProductionValue={(value: number) => setResource('powerProduction', value)}
             imageUrl={"images/power.png"}
           />
         </Grid.Col>
@@ -270,9 +259,9 @@ export function MainGrid() {
             height="50%"
             width="100%"
             value={heat}
-            setValue={setHeat}
+            setValue={(value: number) => setResource('heat', value)}
             productionValue={heatProduction}
-            setProductionValue={setHeatProduction}
+            setProductionValue={(value: number) => setResource('heatProduction', value)}
             imageUrl={"images/heat.png"}
           />
         </Grid.Col>
