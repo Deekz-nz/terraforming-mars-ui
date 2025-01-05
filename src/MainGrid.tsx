@@ -34,7 +34,8 @@ export function MainGrid() {
         This action is irreversible. Are you sure you want to reset everything back to the default?
       </Text>
     ),
-    labels: { confirm: 'Confirm', cancel: 'Cancel' },
+    labels: { confirm: 'RESET TO DEFAULT', cancel: 'Cancel' },
+    confirmProps: { color: 'red' },
     onConfirm: () => resetAll(),
   });
   const resetAll = () => {
@@ -66,7 +67,7 @@ export function MainGrid() {
         This will add your production to your current values, and move your energy to your heat. Are you sure?
       </Text>
     ),
-    labels: { confirm: 'Confirm', cancel: 'Cancel' },
+    labels: { confirm: 'Claim Production', cancel: 'Cancel' },
     onConfirm: () => claimProduction(),
   });
   const claimProduction = () => {
