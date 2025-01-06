@@ -24,7 +24,7 @@ export function TopControlBar(props: TopControlBarProps) {
       <Grid w="100%">
         <Grid.Col span={2.5}>
           <Flex align="center" w="450px" justify="space-between">
-            <Image w={100} h={100} src={props.imageUrl}/>
+            <Image  h={100} src={props.imageUrl}/>
             <Text size="60px">{props.value}</Text>
             <Button size="lg" w="100px" onClick={() => modifyTerraformRating(-1)}>
               -1
