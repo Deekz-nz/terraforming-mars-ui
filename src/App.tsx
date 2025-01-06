@@ -9,7 +9,7 @@ import { BuyCardsModal } from "./BuyCardsModal";
 
 export default function App() {
   return (
-    <MantineProvider theme={theme}>
+    <MantineProvider theme={theme} defaultColorScheme="dark" forceColorScheme="dark">
       <ModalsProvider
          modals={{ 
           playCardModal: PlayCardModal,
