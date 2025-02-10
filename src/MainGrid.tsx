@@ -120,7 +120,7 @@ const [settingsOpened, { open: openSettings, close: closeSettings }] = useDisclo
   }
 
   const raiseTemperature = () => {
-    if (heat > heatPerTemperature) {
+    if (heat >= heatPerTemperature) {
       setResource('heat', heat - heatPerTemperature);
       notifications.show({
         title: 'Success!',
