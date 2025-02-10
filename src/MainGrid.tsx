@@ -99,7 +99,7 @@ const [settingsOpened, { open: openSettings, close: closeSettings }] = useDisclo
   const checkIcon = <IconCheck style={{ width: rem(20), height: rem(20) }} />;
 
   const placeGreenery = () => {
-    if (plants > plantPerGreenery) {
+    if (plants >= plantPerGreenery) {
       setResource('plants', plants - plantPerGreenery);
       notifications.show({
         title: 'Success!',
